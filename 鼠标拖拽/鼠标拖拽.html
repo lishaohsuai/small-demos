@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ceshi </title>
+</head>
+<body>
+	</script>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	div{
+		height: 100px;
+		width: 100px;
+		background-color: black;
+		position: absolute;
+	}
+	</style>
+	<div></div>
+	<script>
+		function getByClass (clsName,parent) {//实现对ie的兼容  参数关键的在前面 第一个是类名  第二个是父元素的 i的名称 字符串类型的不关键的在后面
+		  	var oParent = parent?document.getElementById(parent):document,
+				eles = [],
+				elements = oParent.getElementsByTagName("*");//获取所有的元素
+			for(var i = 0;l=elements.length;i++){
+				if(elements[i].className == clsName){//相当于元素的 classname属性  和 clsName相等就  ok
+					eles.push(elements[i]);
+				}
+			}
+			return eles;
+		}
+
+		window.onload = drag;
+
+		function drag(){
+			var oTitle = document.getElementsByTagName('div')[0];
+			oTitle.onmousedown = fndown;
+		}
+		function fndown(event){
+			event = event || widows.event;
+			var oDrag = document.getElementsByTagName("div")[0],
+
+			disX = event.clientX -oDrag.offsetLeft,//offsetWidth  鼠标距离左边的距离clinetX  减去外围对象的
+			disY = event.clientY -oDrag.offsetTop;
+			document.onmousemove = function(event){
+				 event = event || widows.event;
+				// document.title = event.clientX+","+event.clientY;
+				// oDrag.style.left = event.clientX+"px";
+				// oDrag.style.top = event.clientY+"px";
+				funMove(event,disX,disY);
+			}
+		}
+		function funMove(e,poxX,poxY){
+			var oDrag = document.getElementsByTagName("div")[0], 
+				l = e.clientX-poxX,
+				t = e.clientY-poxY,
+				winW = document.documentElement.clientWidth || document.body.clientWidth,
+				winH =  document.documentElement.clientHeight || document.body.clientHeight,
+				maxW = winW-oDrag.offsetWidth,
+				maxH = winH-oDrag.offsetHeight;
+				if(l < 0 || t <0){
+					l<0?l=0:l;
+					t<0?t = 0:t;	
+				}
+				else if(l>maxW ||t >maxH){
+					l>maxW?l= maxW:l;
+					t>maxH?t = maxH:t;
+				}
+			oDrag.style.top = t+"px";
+			oDrag.style.left = l+"px";
+			oDrag.style.cursor = 'default';
+		}
+		document.onmouseup = function(){//释放事件  定义为 null  即可
+			document.onmousemove = null;
+		}
+
+	</script>
+
+</body>
+</html>
